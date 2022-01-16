@@ -1,0 +1,44 @@
+{
+  "name": "first-heaven-server",
+  "version": "1.0.0",
+  "description": "API Server base using node js and mysql database",
+  "main": "server.js",
+  "scripts": {
+    "dev": "npx nodemon server.js -w server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prodigy4801/first-heaven-server.git"
+  },
+  "keywords": [
+    "first",
+    "heaven",
+    "farms",
+    "api",
+    "agriculture",
+    "crop",
+    "animal"
+  ],
+  "author": "Protechnology LTD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prodigy4801/first-heaven-server/issues"
+  },
+  "homepage": "https://github.com/prodigy4801/first-heaven-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nanoid": "^3.1.30",
+    "sequelize": "^6.12.5",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

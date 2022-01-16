@@ -1,0 +1,1413 @@
+openapi: "3.0.0"
+info:
+  title: First Heaven Backend Server API
+  description: First Heaven Agricultural Technology written by Protechnology LTD for First Heaven Farms.
+  version: 1.0.0
+servers:
+  # - url: https://agric-tech-server.herokuapp.com/
+  #   description: Production Server using Heroku
+  - url: http://localhost:5050/
+   description: Development server
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        phone_number:
+          type: string
+        gender:
+          type: string
+        date_of_birth:
+          type: date
+        address:
+          type: string
+        city:
+          type: string
+        picture_path:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        user_country_id:
+          type: int
+        state_origin_id:
+          type: int
+        lga_origin_id:
+          type: int
+        state_residence_id:
+          type: int
+      required:
+        - first_name
+        - last_name
+        - email
+    States:
+      type: object
+      properties:
+        id:
+          type: int
+        state_name:
+          type: string
+        abbreviation:
+          type: string
+      required:
+        - state_name
+    Roles:
+      type: object
+      properties:
+        id:
+          type: int
+        role_name:
+          type: string
+        pswd_life_days:
+          type: string
+      required:
+        - role_name
+    RolePermissionReference:
+      type: object
+      properties:
+        id:
+          type: int
+        parent_task:
+          type: string
+        role_id:
+          type: int
+        permission_id:
+          type: int
+      required:
+        - role_id
+        - permission_id
+    ProductBrand:
+      type: object
+      properties:
+        id:
+          type: string
+        product_name:
+          type: string
+        unit_cost:
+          type: decimal
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        category_id:
+          type: string
+        activity_id:
+          type: string
+        activity_item_id:
+          type: string
+      required:
+        - product_name
+        - category_id
+        - activity_id
+        - activity_item_id
+    Permissions:
+      type: object
+      properties:
+        id:
+          type: int
+        permission_description:
+          type: string
+        form_url:
+          type: string
+        is_active:
+          type: boolean
+      required:
+        - permission_description
+        - form_url
+        - is_active
+    Partners:
+      type: object
+      properties:
+        id:
+          type: string
+        company_name:
+          type: string
+        full_name:
+          type: string
+        email:
+          type: string
+        phone_number:
+          type: string
+        company_adress:
+          type: string
+        city:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        residing_state_id:
+          type: int
+        country_id:
+          type: int
+      required:
+        - company_name
+        - full_name
+        - email
+    Login:
+      type: object
+      properties:
+        id:
+          type: string
+        reference_id:
+          type: string
+        password_hashed:
+          type: string
+        email:
+          type: string
+        alternative_email:
+          type: string
+        display_name:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        user_id:
+          type: string
+        role_id:
+          type: int
+      required:
+        - password_hashed
+        - email
+        - user_id
+    LGA:
+      type: object
+      properties:
+        id:
+          type: int
+        lga_name:
+          type: string
+        state_id:
+          type: int
+      required:
+        - state_name
+        - state_id
+    FarmDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        farm_name:
+          type: string
+        farming_level:
+          type: int
+        cultivating_items:
+          type: string
+        plot_number:
+          type: string
+        farmland_address:
+          type: string
+        size_of_farmland_original:
+          type: float
+        size_of_farm_hectare:
+          type: float
+        area_cultivated_original:
+          type: float
+        area_cultivated_hectare:
+          type: float
+        area_uncultivated:
+          type: float
+        original_measure:
+          type: string
+        lease_duration_original:
+          type: int
+        lease_duration_days:
+          type: int
+        duration_measure_original:
+          type: string
+        lease_rate:
+          type: float
+        farmland_cost:
+          type: decimal
+        commencement_date:
+          type: date
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        category_id:
+          type: int
+        residing_state_id:
+          type: int
+        residing_lga_id:
+          type: int
+        user_farm_manager_id:
+          type: string
+        user_supervisor_id:
+          type: string
+        partner_id:
+          type: string
+      required:
+        - farm_name
+        - farmland_address
+        - size_of_farmland_original
+        - area_cultivated_original
+        - category_id
+    FarmCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        category_name:
+          type: string
+        category_description:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+      required:
+        - category_name
+    Countries:
+      type: object
+      properties:
+        id:
+          type: int
+        country_name:
+          type: string
+        abbreviation:
+          type: string
+        phone_code:
+          type: string
+      required:
+        - country_name
+    Banks:
+      type: object
+      properties:
+        id:
+          type: int
+        bank_name:
+          type: string
+        sort_code:
+          type: string
+      required:
+        - bank_name
+    BankDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        account_number:
+          type: string
+        account_name:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        user_id:
+          type: string
+        bank_id:
+          type: int
+      required:
+        - account_number
+        - user_id
+        - bank_id
+    Activity:
+      type: object
+      properties:
+        id:
+          type: string
+        activity_name:
+          type: string
+        activity_level:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        category_id:
+          type: string
+      required:
+        - activity_name
+        - category_id
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: string
+        item_name:
+          type: string
+        unit_of_measure:
+          type: string
+        unit_cost:
+          type: decimal
+        approval_type:
+          type: int
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        activity_id:
+          type: string
+      required:
+        - item_name
+        - activity_id
+paths:
+########## Users Route Definition
+  /api/users/create:
+    post:
+      summary: Create a User.
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating User
+        default:
+          description: Unexpected Error
+  /api/users/:
+    get:
+      summary: Get all Users
+      description: Get all Users
+      tags: [Users]
+      responses:
+        "200": # status code
+          description: A list of registered users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/users/{id}:
+    get:
+      summary: Get By Users id
+      tags: [Users]
+      responses:
+        "200": # status code
+          description: A list of registered users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/users/update/{id}:
+    put:
+      summary: Update User record by its id
+      tags: [Users]
+      responses:
+        "200": # status code
+          description: Update a specific user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/users/delete/{id}:
+    delete:
+      summary: Delete User record by its id
+      tags: [Users]
+      responses:
+        "200": # status code
+          description: Delete a specific user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+######### State route definition
+  /api/states/:
+    get:
+      summary: Get all States
+      description: Get all States
+      tags: [States]
+      responses:
+        "200": # status code
+          description: A list of registered states
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/States'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/states/{id}:
+    get:
+      summary: Get By States id
+      tags: [States]
+      responses:
+        "200": # status code
+          description: A list of registered users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Roles Route Definition
+  /api/roles/:
+    get:
+      summary: Get all Roles
+      description: Get all Roles
+      tags: [Roles]
+      responses:
+        "200": # status code
+          description: A list of registered roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roles'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/roles/{id}:
+    get:
+      summary: Get By Roles id
+      tags: [Roles]
+      responses:
+        "200": # status code
+          description: Get a registered role  by its id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roles'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Role Permission Reference Route Definition
+  /api/role-permission-ref/:
+    get:
+      summary: Get all Role-Permission Reference
+      description: Get all Role-Permission Reference
+      tags: [RolePermissionReference]
+      responses:
+        "200": # status code
+          description: A list of registered Reference
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionReference'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/role-permission-ref/{id}:
+    get:
+      summary: Get By Reference id
+      tags: [RolePermissionReference]
+      responses:
+        "200": # status code
+          description: Get a specific form reference.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionReference'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Product Brand Route Definition
+  /api/product-brand/create:
+    post:
+      summary: Create Product Brand for an activity item.
+      tags: [ProductBrand]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductBrand"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating product brand
+        default:
+          description: Unexpected Error
+  /api/product-brand/:
+    get:
+      summary: Get all Product Brand for an activity item
+      description: Get all Users
+      tags: [ProductBrand]
+      responses:
+        "200": # status code
+          description: A list of registered product brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/product-brand/{id}:
+    get:
+      summary: Get By Product Brand id
+      tags: [ProductBrand]
+      responses:
+        "200": # status code
+          description: Get a specific product brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/product-brand/update/{id}:
+    put:
+      summary: Update Product Brand record by its id
+      tags: [ProductBrand]
+      responses:
+        "200": # status code
+          description: Update a specific product brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/product-brand/delete/{id}:
+    delete:
+      summary: Delete product brand record by its id
+      tags: [ProductBrand]
+      responses:
+        "200": # status code
+          description: Delete a specific product brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Permissions Route Definition
+  /api/permissions/:
+    get:
+      summary: Get all application permissions
+      description: Get all permission on the application.
+      tags: [Permissions]
+      responses:
+        "200": # status code
+          description: A list of registered permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permissions'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/permissions/{id}:
+    get:
+      summary: Get By permissions id
+      tags: [Permissions]
+      responses:
+        "200": # status code
+          description: Get a specific permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permissions'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Partners Route Definition
+  /api/partners/create:
+    post:
+      summary: Register a partner.
+      tags: [Partners]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Partners"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating Partner
+        default:
+          description: Unexpected Error
+  /api/partners/:
+    get:
+      summary: Retrieve all partners
+      description: Retrieves all registered partners
+      tags: [Partners]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all partners
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/partners/{id}:
+    get:
+      summary: Retrieve By Partners id
+      tags: [Partners]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific partners record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/partners/update/{id}:
+    put:
+      summary: Update partners record by its id
+      tags: [Partners]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific partners record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/partners/delete/{id}:
+    delete:
+      summary: Remove a specific partners record
+      tags: [Partners]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## Login Route Definition
+  /api/login/create:
+    post:
+      summary: Create an access credential.
+      tags: [Login]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating access credential
+        default:
+          description: Unexpected Error
+  /api/login/:
+    get:
+      summary: Retrieve all access credentials
+      description: Retrieves all registered credentials
+      tags: [Login]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all access credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/login/{id}:
+    get:
+      summary: Retrieve By credential key
+      tags: [Login]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific credential record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/login/update/{id}:
+    put:
+      summary: Update credential record by its id
+      tags: [Login]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific credential record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/login/delete/{id}:
+    delete:
+      summary: Remove a specific access credential record
+      tags: [Login]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific credential
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+########## LGA Route Definition
+  /api/lga/:
+    get:
+      summary: Retrieve all local govt
+      description: Retrieves all registered local govt
+      tags: [LGA]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all local govts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LGA'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/lga/{id}:
+    get:
+      summary: Retrieve By local govt key
+      tags: [LGA]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific local govt record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LGA'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Frm Details Route Definition
+  /api/farm-details/create:
+    post:
+      summary: Register a Farmland.
+      tags: [FarmDetails]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FarmDetails"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmDetails'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating farm record
+        default:
+          description: Unexpected Error
+  /api/farm-details/:
+    get:
+      summary: Retrieve all farm record
+      description: Retrieves all registered farms
+      tags: [FarmDetails]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all farm records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-details/{id}:
+    get:
+      summary: Retrieve farm record by its key
+      tags: [FarmDetails]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific Farm record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-details/update/{id}:
+    put:
+      summary: Update Farm record record by its key
+      tags: [FarmDetails]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific farm record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-details/delete/{id}:
+    delete:
+      summary: Remove a specific farm record from list
+      tags: [FarmDetails]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific farm record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Farm Category Route Definition
+  /api/farm-category/create:
+    post:
+      summary: Register a farm category.
+      tags: [FarmCategory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FarmCategory"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmCategory'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating farm category
+        default:
+          description: Unexpected Error
+  /api/farm-category/:
+    get:
+      summary: Retrieve all farm categories
+      description: Retrieves all registered farm categories
+      tags: [FarmCategory]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all farm category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmCategory'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-category/{id}:
+    get:
+      summary: Retrieve by farm category key
+      tags: [FarmCategory]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific farm category record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmCategory'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-category/update/{id}:
+    put:
+      summary: Update farm category record by its key
+      tags: [FarmCategory]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific farm category record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmCategory'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/farm-category/delete/{id}:
+    delete:
+      summary: Remove a specific farm category record
+      tags: [FarmCategory]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific farm category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FarmCategory'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Partners Route Definition
+  /api/countries/:
+    get:
+      summary: Retrieve all countries
+      description: Retrieves all countries
+      tags: [Countries]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all countries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Countries'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/countries/{id}:
+    get:
+      summary: Retrieve By Country key
+      tags: [Countries]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific country record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Countries'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Bank Names Route Definition
+  /api/banks/:
+    get:
+      summary: Retrieve all bank name
+      description: Retrieves all registered Nigerian Bank name
+      tags: [Banks]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all banks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banks'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/banks/{id}:
+    get:
+      summary: Retrieve by bank key id
+      tags: [Banks]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific Bank record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banks'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## User Bank Details Route Definition
+  /api/bank-details/create:
+    post:
+      summary: Register a user bank information.
+      tags: [BankDetails]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankDetails"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankDetails'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating user bank info
+        default:
+          description: Unexpected Error
+  /api/bank-details/:
+    get:
+      summary: Retrieve all user bank info
+      description: Retrieves all registered User's bank info
+      tags: [BankDetails]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all user bank info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/bank-details/{id}:
+    get:
+      summary: Retrieve User bank info by its key
+      tags: [BankDetails]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific user bank record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/bank-details/update/{id}:
+    put:
+      summary: Update user bank record by its key
+      tags: [BankDetails]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific partners record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/bank-details/delete/{id}:
+    delete:
+      summary: Remove a specific user bank record
+      tags: [BankDetails]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific user bank record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankDetails'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Activity Route Definition
+  /api/activity/create:
+    post:
+      summary: Register a farm activity.
+      tags: [Activity]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Activity"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating farm activity
+        default:
+          description: Unexpected Error
+  /api/activity/:
+    get:
+      summary: Retrieve all farm activity
+      description: Retrieves all registered farm activity
+      tags: [Activity]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all farm activity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity/{id}:
+    get:
+      summary: Retrieve By farm activity key
+      tags: [Activity]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific farm activity record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity/update/{id}:
+    put:
+      summary: Update farm activity record by its key
+      tags: [Activity]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific farm activity record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity/delete/{id}:
+    delete:
+      summary: Remove a specific farm activity record
+      tags: [Activity]
+      responses:
+        "200": # status code
+          description: Successfully deleted a specific farm activity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+
+########## Activity Item Route Definition
+  /api/activity-item/create:
+    post:
+      summary: Register an activity item.
+      tags: [ActivityItem]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActivityItem"
+      responses:
+        "200": # status code
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityItem'
+                type: object
+        "400":
+          description: Record already exist or input content is empty
+        "500":
+          description: Server Error while creating activity item
+        default:
+          description: Unexpected Error
+  /api/activity-item/:
+    get:
+      summary: Retrieve all activity items
+      description: Retrieves all registered activity items
+      tags: [ActivityItem]
+      responses:
+        "200": # status code
+          description: Successfully retrieved all Activity Item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityItem'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity-item/{id}:
+    get:
+      summary: Retrieve By Activity Item key
+      tags: [ActivityItem]
+      responses:
+        "200": # status code
+          description: Successfully retrieved a specific activity item record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityItem'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity-item/update/{id}:
+    put:
+      summary: Update activity item record by its key
+      tags: [ActivityItem]
+      responses:
+        "200": # status code
+          description: Successfully updated a specific activity item record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityItem'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
+  /api/activity-item/delete/{id}:
+    delete:
+      summary: Remove a specific activity item record
+      tags: [ActivityItem]
+      responses:
+        "200": # status code
+          description: Succefully deleted a specific activity item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityItem'
+                type: array
+                items:
+                  type: object
+        "500":
+          description: Internal Server Error
